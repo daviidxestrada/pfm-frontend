@@ -24,6 +24,11 @@ function ReservationForm({ apartmentId }) {
             return;
         }
 
+        if (startDate < today) {
+            setError("No puedes seleccionar fechas pasadas");
+         return;
+}
+
         try {
             setLoading(true);
             await createReservation({
@@ -42,6 +47,8 @@ function ReservationForm({ apartmentId }) {
         }
     };
 
+    const today = new Date().toISOString().split("T")[0];
+
     return (
         <section>
             <h2>Reservar</h2>
@@ -52,6 +59,7 @@ function ReservationForm({ apartmentId }) {
                     <input
                         type="date"
                         value={startDate}
+                        min = {today}
                         onChange={(e) => setStartDate(e.target.value)}
                     />
                 </div>
@@ -61,6 +69,7 @@ function ReservationForm({ apartmentId }) {
                     <input
                         type="date"
                         value={endDate}
+                        min = {startDate || today}
                         onChange={(e) => setEndDate(e.target.value)}
                     />
                 </div>
