@@ -1,6 +1,7 @@
 import { useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { getApartmentById } from "../../services/apartmentService";
+import ReservationForm from "../../components/reservations/ReservationForm";
 
 
 function ApartmentDetailPage() {
@@ -61,6 +62,8 @@ function ApartmentDetailPage() {
                     ))}
                 </div>
             )}
+
+            <ReservationForm apartmentId={apartment._id} />
         </section>
     );
 }
