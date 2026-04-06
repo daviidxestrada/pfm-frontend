@@ -8,6 +8,8 @@ import ApartmentDetailPage from "../pages/public/ApartmentDetailPage";
 import NotFoundPage from "../pages/public/NotFoundPage";
 import ReservationPage from "../pages/public/ReservationPage";
 
+import ProtectedRoute from "./ProtectedRoute";
+
 import AdminLoginPage from "../pages/admin/AdminLoginPage";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
 
@@ -17,7 +19,7 @@ function AppRouter() {
         <Routes>
             <Route path="/" element={<MainLayout />}>
                 <Route path="login" element={<AdminLoginPage />} />
-                <Route path="admin" element={<AdminDashboardPage />} />
+                <Route path="/admin" element={<ProtectedRoute requireAdmin={true}> <AdminDashboardPage /></ProtectedRoute>}/>
                 <Route index element={<HomePage />} />
                 <Route path="apartments" element={<ApartmentsPage />} />
                 <Route path="apartments/:id" element={<ApartmentDetailPage />} />

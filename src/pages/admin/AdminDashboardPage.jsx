@@ -5,16 +5,13 @@ import { AuthContext } from "../../context/AuthContext";
 function AdminDashboardPage() {
   const { user, logout } = useContext(AuthContext);
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
   return (
     <section>
-      <h1>Panel de administracion</h1>
-      <p>Sesion iniciada como {user.email ?? user.name ?? "administrador"}.</p>
-      <button type="button" onClick={logout}>
-        Cerrar sesion
+      <h1>Panel de administración</h1>
+      <p>Sesión iniciada como {user.email}</p>
+
+      <button onClick={logout}>
+        Cerrar sesión
       </button>
     </section>
   );

@@ -4,5 +4,17 @@ import { AuthContext } from "../context/AuthContext";
 
 function ProtectedRoute({ children, requireAdmin = false }) {
     const { user } = useContext(AuthContext);
-    
+
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
+
+    if (requireAdmin && user.role !== "admin") {
+        return <Navigate to="/" replace />;
+    }
+
+    return children;
+
 }
+
+export default ProtectedRoute
