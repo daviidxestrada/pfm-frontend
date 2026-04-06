@@ -1,12 +1,50 @@
-import { useState } from "react";
-import { createReservation } from "../../services/reservationService";
+import { useEffect, useState } from "react";
+import {
+    createReservation,
+    getApartmentAvailability,
+} from "../../services/reservationService";
 
 function ReservationForm({ apartmentId }) {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [unavailableRanges, setUnavailableRanges] = useState([]);
+    const [availabilityLoading, setAvailabilityLoading] = useState(true);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+
+    const today = new Date().toISOString().split("T")[0];
+
+    useEffect(() => {
+        const fetchAvailability = async () => {
+            try {
+                setAvailabilityLoading(true);
+                const data = await getApartmentAvailability(apartmentId);
+                setUnavailableRanges(data.unavailableRanges);
+            } catch (err) {
+                console.error(err);
+                setError("No se pudo cargar la disponibilidad.");
+            } finally {
+                setAvailabilityLoading(false);
+            }
+        };
+
+        fetchAvailability();
+    }, [apartmentId]);
+
+    const hasOverlap = (nextStartDate, nextEndDate) => {
+        const selectedStart = new Date(nextStartDate);
+        const selectedEnd = new Date(nextEndDate);
+
+        return unavailableRanges.some((range) => {
+            const bookedStart = new Date(range.startDate);
+            const bookedEnd = new Date(range.endDate);
+
+            return selectedStart < bookedEnd && selectedEnd > bookedStart;
+        });
+    };
+
+    const formatRange = (value) => new Date(value).toLocaleDateString("es-ES");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,8 +64,13 @@ function ReservationForm({ apartmentId }) {
 
         if (startDate < today) {
             setError("No puedes seleccionar fechas pasadas");
-         return;
-}
+            return;
+        }
+
+        if (hasOverlap(startDate, endDate)) {
+            setError("Las fechas seleccionadas no están disponibles.");
+            return;
+        }
 
         try {
             setLoading(true);
@@ -39,6 +82,8 @@ function ReservationForm({ apartmentId }) {
             setMessage("Reserva creada con exito.");
             setStartDate("");
             setEndDate("");
+            const data = await getApartmentAvailability(apartmentId);
+            setUnavailableRanges(data.unavailableRanges);
         } catch (err) {
             console.error(err);
             setError(err.response?.data?.message || "Error al crear la reserva.");
@@ -47,11 +92,24 @@ function ReservationForm({ apartmentId }) {
         }
     };
 
-    const today = new Date().toISOString().split("T")[0];
-
     return (
         <section>
             <h2>Reservar</h2>
+
+            <h3>Fechas ocupadas</h3>
+            {availabilityLoading ? (
+                <p>Cargando disponibilidad...</p>
+            ) : unavailableRanges.length === 0 ? (
+                <p>No hay fechas bloqueadas por reservas todavía.</p>
+            ) : (
+                <ul>
+                    {unavailableRanges.map((range) => (
+                        <li key={`${range.startDate}-${range.endDate}`}>
+                            {formatRange(range.startDate)} - {formatRange(range.endDate)}
+                        </li>
+                    ))}
+                </ul>
+            )}
 
             <form onSubmit={handleSubmit}>
                 <div>

@@ -1,5 +1,10 @@
 import api from "./api";
 
+export const getApartmentAvailability = async (apartmentId) => {
+  const response = await api.get(`/reservations/availability/${apartmentId}`);
+  return response.data;
+};
+
 export const getReservations = async () => {
   const response = await api.get("/reservations");
   return response.data;
