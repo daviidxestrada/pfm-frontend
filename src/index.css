@@ -109,3 +109,161 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.admin-shell {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  background: linear-gradient(180deg, #f8f4ea 0%, #fff 45%);
+}
+
+.admin-sidebar {
+  padding: 32px 24px;
+  border-right: 1px solid var(--border);
+  background: #1f3a2f;
+  color: #f3efe4;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: left;
+}
+
+.admin-brand h1,
+.admin-page h2,
+.admin-module-card h3 {
+  color: inherit;
+}
+
+.admin-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  opacity: 0.72;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-link {
+  padding: 12px 14px;
+  border: 1px solid rgba(243, 239, 228, 0.14);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.admin-link-active {
+  background: #f3efe4;
+  color: #1f3a2f;
+  border-color: #f3efe4;
+}
+
+.admin-logout,
+.admin-module-link {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 18px;
+  text-decoration: none;
+}
+
+.admin-logout {
+  margin-top: auto;
+  background: #d9a441;
+  color: #1f1a11;
+  cursor: pointer;
+}
+
+.admin-content {
+  padding: 40px;
+  text-align: left;
+}
+
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.admin-page-header {
+  max-width: 720px;
+}
+
+.admin-kpis,
+.admin-module-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.admin-kpi-card,
+.admin-module-card,
+.admin-placeholder-card {
+  padding: 24px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 18px 40px rgba(18, 22, 18, 0.08);
+}
+
+.admin-kpi-card span,
+.admin-module-status {
+  font-size: 14px;
+  color: #6f6a61;
+}
+
+.admin-kpi-card strong {
+  display: block;
+  margin: 6px 0 10px;
+  font-size: 28px;
+  color: #1b1916;
+}
+
+.admin-module-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-module-link {
+  align-self: flex-start;
+  background: #1f3a2f;
+  color: #f3efe4;
+}
+
+.admin-placeholder-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #1b1916;
+}
+
+@media (max-width: 900px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .admin-content {
+    padding: 24px 20px 32px;
+  }
+
+  .admin-kpis,
+  .admin-module-grid {
+    grid-template-columns: 1fr;
+  }
+}

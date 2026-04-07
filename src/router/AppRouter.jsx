@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import AdminLayout from "../layouts/AdminLayout";
 import MainLayout from "../layouts/MainLayout";
 
 import HomePage from "../pages/public/HomePage";
@@ -10,8 +11,11 @@ import ReservationPage from "../pages/public/ReservationPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 
+import AdminApartmentsPage from "../pages/admin/AdminApartmentsPage";
+import AdminBlocksPage from "../pages/admin/AdminBlocksPage";
 import AdminLoginPage from "../pages/admin/AdminLoginPage";
 import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
+import AdminReservationsPage from "../pages/admin/AdminReservationsPage";
 
 function AppRouter() {
     return (
@@ -19,12 +23,25 @@ function AppRouter() {
         <Routes>
             <Route path="/" element={<MainLayout />}>
                 <Route path="login" element={<AdminLoginPage />} />
-                <Route path="/admin" element={<ProtectedRoute requireAdmin={true}> <AdminDashboardPage /></ProtectedRoute>}/>
                 <Route index element={<HomePage />} />
                 <Route path="apartments" element={<ApartmentsPage />} />
                 <Route path="apartments/:id" element={<ApartmentDetailPage />} />
                 <Route path="reserve" element={<ReservationPage />} />
                 <Route path="*" element={<NotFoundPage />} />
+            </Route>
+
+            <Route
+                path="/admin"
+                element={
+                    <ProtectedRoute requireAdmin={true}>
+                        <AdminLayout />
+                    </ProtectedRoute>
+                }
+            >
+                <Route index element={<AdminDashboardPage />} />
+                <Route path="apartments" element={<AdminApartmentsPage />} />
+                <Route path="reservations" element={<AdminReservationsPage />} />
+                <Route path="blocks" element={<AdminBlocksPage />} />
             </Route>
         </Routes>
         </BrowserRouter>
