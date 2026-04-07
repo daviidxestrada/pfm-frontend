@@ -1,61 +1,77 @@
-import { useState, useContext } from "react";
-import { loginUser } from "../../services/authService";
-import { AuthContext } from "../../context/authContext";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { AuthContext } from "../../context/authContext";
+import { loginUser } from "../../services/authService";
 
 function AdminLoginPage() {
-    const { login } = useContext(AuthContext);
-    const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError("");
-        try {
-            setLoading(true);
-            const data = await loginUser({ email, password });
-            login(data);
-            navigate('/admin');
-        } catch (err) {
-            console.error(err);
-            setError("Credenciales incorrectas.");
-        } finally {
-            setLoading(false);
-        }
-};
+    try {
+      setLoading(true);
+      const data = await loginUser({ email, password });
+      login(data);
+      navigate(data.user.role === "admin" ? "/admin" : "/account");
+    } catch (requestError) {
+      console.error(requestError);
+      setError("Credenciales incorrectas.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    return (
-        <section>
-            <h1>Login Admin</h1>
-            <form onSubmit={handleSubmit}>
-                <input 
-                   type="email"
-                   placeholder="Email"
-                   value={email}
-                   onChange={(e) => setEmail(e.target.value)} 
-                   />
+  return (
+    <section className="login-shell">
+      <article className="login-card">
+        <div className="login-copy">
+          <p className="page-eyebrow">Acceso</p>
+          <h1>Login</h1>
+          <p className="page-lead">
+            Entra con tu cuenta para reservar apartamentos, consultar tus
+            reservas o acceder al panel admin si tu rol lo permite.
+          </p>
+        </div>
 
-                   <input 
-                     type="password"
-                     placeholder="Password"
-                     value={password}
-                     onChange={(e) => setPassword(e.target.value)} 
-                     />
+        <form className="login-form" onSubmit={handleSubmit}>
+          <label className="booking-field">
+            <span>Email</span>
+            <input
+              type="email"
+              placeholder="admin@demo.com"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </label>
 
-                <button
-                 type="submit">
-                 {loading ? "Cargando..." : "Login"}
-                 </button>
-                </form>
-            {error && <p>{error}</p>}
-        </section>
-    );
+          <label className="booking-field">
+            <span>Password</span>
+            <input
+              type="password"
+              placeholder="Tu password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </label>
+
+          {error && <div className="page-feedback page-feedback-error">{error}</div>}
+
+          <button type="submit" className="site-cta site-cta-primary booking-submit" disabled={loading}>
+            {loading ? "Accediendo..." : "Entrar"}
+          </button>
+        </form>
+      </article>
+    </section>
+  );
 }
 
 export default AdminLoginPage;

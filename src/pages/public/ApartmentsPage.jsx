@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import ApartmentCard from "../../components/apartments/ApartmentCard";
 import { getApartments } from "../../services/apartmentService";
 
@@ -12,9 +13,9 @@ function ApartmentsPage() {
       try {
         const data = await getApartments();
         setApartments(data);
-      } catch (error) {
-        console.error(error);
-        setError("No se pudieron cargar los apartamentos");
+      } catch (requestError) {
+        console.error(requestError);
+        setError("No se pudieron cargar los apartamentos.");
       } finally {
         setLoading(false);
       }
@@ -24,23 +25,35 @@ function ApartmentsPage() {
   }, []);
 
   if (loading) {
-    return <p>Cargando apartamentos...</p>;
+    return <p className="page-feedback">Cargando apartamentos...</p>;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <p className="page-feedback page-feedback-error">{error}</p>;
   }
 
   return (
-    <section>
-      <h1>Listado de apartamentos</h1>
+    <section className="page-stack">
+      <div className="page-heading">
+        <p className="page-eyebrow">Catalogo</p>
+        <h1>Apartamentos disponibles</h1>
+        <p className="page-lead">
+          Una vista clara para comparar opciones antes de entrar al detalle y
+          revisar la disponibilidad real.
+        </p>
+      </div>
 
       {apartments.length === 0 ? (
-        <p>No hay apartamentos</p>
+        <div className="empty-card">
+          <h2>No hay apartamentos publicados</h2>
+          <p>Cuando el admin cree apartamentos apareceran aqui.</p>
+        </div>
       ) : (
-        apartments.map((apartment) => (
-          <ApartmentCard key={apartment._id} apartment={apartment} />
-        ))
+        <div className="apartment-grid">
+          {apartments.map((apartment) => (
+            <ApartmentCard key={apartment._id} apartment={apartment} />
+          ))}
+        </div>
       )}
     </section>
   );

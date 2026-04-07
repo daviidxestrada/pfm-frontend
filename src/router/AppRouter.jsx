@@ -7,7 +7,9 @@ import HomePage from "../pages/public/HomePage";
 import ApartmentsPage from "../pages/public/ApartmentsPage";
 import ApartmentDetailPage from "../pages/public/ApartmentDetailPage";
 import NotFoundPage from "../pages/public/NotFoundPage";
+import RegisterPage from "../pages/public/RegisterPage";
 import ReservationPage from "../pages/public/ReservationPage";
+import UserAccountPage from "../pages/user/UserAccountPage";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -23,9 +25,11 @@ function AppRouter() {
         <Routes>
             <Route path="/" element={<MainLayout />}>
                 <Route path="login" element={<AdminLoginPage />} />
+                <Route path="register" element={<RegisterPage />} />
                 <Route index element={<HomePage />} />
                 <Route path="apartments" element={<ApartmentsPage />} />
                 <Route path="apartments/:id" element={<ApartmentDetailPage />} />
+                <Route path="account" element={<ProtectedRoute><UserAccountPage /></ProtectedRoute>} />
                 <Route path="reserve" element={<ReservationPage />} />
                 <Route path="*" element={<NotFoundPage />} />
             </Route>

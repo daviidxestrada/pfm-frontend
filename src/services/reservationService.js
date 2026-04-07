@@ -5,6 +5,11 @@ export const getApartmentAvailability = async (apartmentId) => {
   return response.data;
 };
 
+export const getMyReservations = async () => {
+  const response = await api.get("/reservations/mine");
+  return response.data;
+};
+
 export const getReservations = async () => {
   const response = await api.get("/reservations");
   return response.data;
