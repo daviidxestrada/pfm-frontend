@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   deleteReservation,
   getReservations,
+  updateReservationStatus,
 } from "../../services/reservationService";
 
 const formatDate = (value) =>
@@ -12,10 +13,18 @@ const formatDate = (value) =>
     year: "numeric",
   });
 
+const statusLabels = {
+  pending: "Pendiente",
+  approved: "Aprobada",
+  rejected: "Denegada",
+};
+
 function AdminReservationsPage() {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState(null);
+  const [processingId, setProcessingId] = useState(null);
+  const [reasons, setReasons] = useState({});
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
@@ -25,7 +34,7 @@ function AdminReservationsPage() {
       const data = await getReservations();
       const sortedReservations = [...data].sort(
         (firstReservation, secondReservation) =>
-          new Date(secondReservation.startDate) - new Date(firstReservation.startDate)
+          new Date(secondReservation.createdAt) - new Date(firstReservation.createdAt)
       );
       setReservations(sortedReservations);
     } catch (err) {
@@ -39,6 +48,68 @@ function AdminReservationsPage() {
   useEffect(() => {
     loadReservations();
   }, []);
+
+  const handleReasonChange = (reservationId, value) => {
+    setReasons((currentReasons) => ({
+      ...currentReasons,
+      [reservationId]: value,
+    }));
+  };
+
+  const handleApprove = async (reservationId) => {
+    try {
+      setProcessingId(reservationId);
+      setError("");
+      setMessage("");
+      const updatedReservation = await updateReservationStatus(reservationId, {
+        status: "approved",
+      });
+
+      setReservations((currentReservations) =>
+        currentReservations.map((reservation) =>
+          reservation._id === reservationId ? updatedReservation : reservation
+        )
+      );
+      setMessage("Solicitud aprobada correctamente.");
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "No se pudo aprobar la solicitud.");
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  const handleReject = async (reservationId) => {
+    const rejectionReason = (reasons[reservationId] || "").trim();
+
+    if (!rejectionReason) {
+      setError("Debes indicar un motivo para denegar la solicitud.");
+      setMessage("");
+      return;
+    }
+
+    try {
+      setProcessingId(reservationId);
+      setError("");
+      setMessage("");
+      const updatedReservation = await updateReservationStatus(reservationId, {
+        status: "rejected",
+        rejectionReason,
+      });
+
+      setReservations((currentReservations) =>
+        currentReservations.map((reservation) =>
+          reservation._id === reservationId ? updatedReservation : reservation
+        )
+      );
+      setMessage("Solicitud denegada correctamente.");
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "No se pudo denegar la solicitud.");
+    } finally {
+      setProcessingId(null);
+    }
+  };
 
   const handleDelete = async (reservationId) => {
     const confirmed = window.confirm(
@@ -70,10 +141,10 @@ function AdminReservationsPage() {
     <section className="admin-page">
       <div className="admin-page-header">
         <p className="admin-eyebrow">Modulo</p>
-        <h2>Reservas</h2>
+        <h2>Solicitudes y reservas</h2>
         <p>
-          Gestion administrativa de reservas para revisar fechas, apartamento y
-          precio total, con opcion de eliminar reservas.
+          El admin puede revisar las solicitudes recibidas, aprobarlas o
+          denegarlas con un motivo visible para el usuario.
         </p>
       </div>
 
@@ -85,11 +156,11 @@ function AdminReservationsPage() {
 
       <section className="admin-list-card">
         <div className="admin-form-header">
-          <h3>Reservas registradas</h3>
+          <h3>Solicitudes recibidas</h3>
           <p>
             {loading
               ? "Cargando reservas..."
-              : `${reservations.length} reservas disponibles en el panel.`}
+              : `${reservations.length} solicitudes o reservas disponibles en el panel.`}
           </p>
         </div>
 
@@ -104,14 +175,18 @@ function AdminReservationsPage() {
                 <div className="admin-reservation-summary">
                   <div className="admin-reservation-top">
                     <h3>{reservation.apartment?.title || "Apartamento eliminado"}</h3>
-                    <span className="admin-reservation-price">
-                      {reservation.totalPrice} EUR
-                    </span>
+                    <div className="user-reservation-badges">
+                      <span className="admin-reservation-price">
+                        {reservation.totalPrice} EUR
+                      </span>
+                      <span className={`status-pill status-${reservation.status}`}>
+                        {statusLabels[reservation.status] || reservation.status}
+                      </span>
+                    </div>
                   </div>
 
                   <p>
-                    <strong>Ciudad:</strong>{" "}
-                    {reservation.apartment?.city || "No disponible"}
+                    <strong>Ciudad:</strong> {reservation.apartment?.city || "No disponible"}
                   </p>
                   <p>
                     <strong>Entrada:</strong> {formatDate(reservation.startDate)}
@@ -123,17 +198,64 @@ function AdminReservationsPage() {
                     <strong>Creada:</strong> {formatDate(reservation.createdAt)}
                   </p>
                   <p>
-                    <strong>Apartamento ID:</strong> {reservation.apartment?._id || "-"}
+                    <strong>Solicitante:</strong>{" "}
+                    {reservation.user
+                      ? `${reservation.user.name} · ${reservation.user.email}`
+                      : "Usuario no disponible"}
                   </p>
-                  <p>
-                    <strong>Usuario:</strong> {reservation.user || "Reserva publica sin usuario"}
-                  </p>
+                  {reservation.status === "rejected" && reservation.rejectionReason && (
+                    <div className="page-feedback page-feedback-error">
+                      <strong>Motivo de denegacion:</strong> {reservation.rejectionReason}
+                    </div>
+                  )}
                 </div>
 
-                <div className="admin-apartment-actions">
+                <div className="admin-reservation-controls">
+                  {reservation.status === "pending" && (
+                    <>
+                      <label className="admin-field">
+                        <span>Motivo de denegacion</span>
+                        <textarea
+                          rows="3"
+                          value={reasons[reservation._id] || ""}
+                          onChange={(event) =>
+                            handleReasonChange(reservation._id, event.target.value)
+                          }
+                          placeholder="Indica por que se rechaza la solicitud"
+                        />
+                      </label>
+
+                      <div className="admin-apartment-actions">
+                        <button
+                          type="button"
+                          className="admin-primary-button"
+                          disabled={processingId === reservation._id}
+                          onClick={() => handleApprove(reservation._id)}
+                        >
+                          {processingId === reservation._id ? "Procesando..." : "Aprobar"}
+                        </button>
+
+                        <button
+                          type="button"
+                          className="admin-danger-button"
+                          disabled={processingId === reservation._id}
+                          onClick={() => handleReject(reservation._id)}
+                        >
+                          {processingId === reservation._id ? "Procesando..." : "Denegar"}
+                        </button>
+                      </div>
+                    </>
+                  )}
+
+                  {reservation.status !== "pending" && (
+                    <div className="page-feedback">
+                      Solicitud ya revisada por administracion.
+                    </div>
+                  )}
+
                   <button
                     type="button"
-                    className="admin-danger-button"
+                    className="admin-secondary-button"
                     disabled={deletingId === reservation._id}
                     onClick={() => handleDelete(reservation._id)}
                   >

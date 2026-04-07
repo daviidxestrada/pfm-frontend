@@ -12,7 +12,7 @@ const initialForm = {
   description: "",
   city: "",
   price: "",
-  images: "",
+  images: [],
 };
 
 const toFormState = (apartment) => ({
@@ -20,14 +20,8 @@ const toFormState = (apartment) => ({
   description: apartment.description ?? "",
   city: apartment.city ?? "",
   price: apartment.price ?? "",
-  images: (apartment.images ?? []).join("\n"),
+  images: apartment.images ?? [],
 });
-
-const parseImages = (value) =>
-  value
-    .split("\n")
-    .map((image) => image.trim())
-    .filter(Boolean);
 
 function AdminApartmentsPage() {
   const [apartments, setApartments] = useState([]);
@@ -76,6 +70,53 @@ function AdminApartmentsPage() {
     setMessage("Editando apartamento seleccionado.");
   };
 
+  const handleImageUpload = async (event) => {
+    const files = Array.from(event.target.files || []);
+
+    if (files.length === 0) {
+      return;
+    }
+
+    try {
+      const imagePromises = files.map(
+        (file) =>
+          new Promise((resolve, reject) => {
+            if (!file.type.startsWith("image/")) {
+              reject(new Error("Solo se permiten archivos de imagen."));
+              return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error("No se pudo leer una de las imagenes."));
+            reader.readAsDataURL(file);
+          })
+      );
+
+      const uploadedImages = await Promise.all(imagePromises);
+
+      setForm((currentForm) => ({
+        ...currentForm,
+        images: [...currentForm.images, ...uploadedImages],
+      }));
+      setError("");
+      setMessage("Imagenes adjuntadas correctamente.");
+    } catch (uploadError) {
+      console.error(uploadError);
+      setError(uploadError.message || "No se pudieron adjuntar las imagenes.");
+      setMessage("");
+    } finally {
+      event.target.value = "";
+    }
+  };
+
+  const handleRemoveImage = (indexToRemove) => {
+    setForm((currentForm) => ({
+      ...currentForm,
+      images: currentForm.images.filter((_, index) => index !== indexToRemove),
+    }));
+  };
+
   const handleCancelEdit = () => {
     resetForm();
     setMessage("Edicion cancelada.");
@@ -109,7 +150,7 @@ function AdminApartmentsPage() {
       description: form.description.trim(),
       city: form.city.trim(),
       price: numericPrice,
-      images: parseImages(form.images),
+      images: form.images,
     };
 
     try {
@@ -180,8 +221,8 @@ function AdminApartmentsPage() {
           <div className="admin-form-header">
             <h3>{editingId ? "Editar apartamento" : "Nuevo apartamento"}</h3>
             <p>
-              Usa una URL por linea en imagenes. Puedes dejarlo vacio si todavia
-              no quieres cargar fotos.
+              Adjunta imagenes desde tu equipo. Se guardaran en la base de datos
+              junto con el apartamento.
             </p>
           </div>
 
@@ -234,14 +275,30 @@ function AdminApartmentsPage() {
 
             <label className="admin-field">
               <span>Imagenes</span>
-              <textarea
-                name="images"
-                rows="4"
-                value={form.images}
-                onChange={handleChange}
-                placeholder="https://...\nhttps://..."
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleImageUpload}
               />
             </label>
+
+            {form.images.length > 0 && (
+              <div className="admin-image-grid">
+                {form.images.map((image, index) => (
+                  <article key={`${index}-${image.slice(0, 20)}`} className="admin-image-item">
+                    <img src={image} alt={`Imagen ${index + 1}`} className="admin-image-preview" />
+                    <button
+                      type="button"
+                      className="admin-secondary-button"
+                      onClick={() => handleRemoveImage(index)}
+                    >
+                      Quitar imagen
+                    </button>
+                  </article>
+                ))}
+              </div>
+            )}
 
             {(error || message) && (
               <div className={error ? "admin-feedback admin-error" : "admin-feedback admin-success"}>

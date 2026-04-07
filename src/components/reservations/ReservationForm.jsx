@@ -84,7 +84,7 @@ function ReservationForm({ apartmentId }) {
         startDate,
         endDate,
       });
-      setMessage("Reserva creada con exito.");
+      setMessage("Solicitud enviada. Queda pendiente de aprobacion por el admin.");
       setStartDate("");
       setEndDate("");
       const data = await getApartmentAvailability(apartmentId);

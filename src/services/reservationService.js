@@ -25,6 +25,11 @@ export const createReservation = async (data) => {
   return response.data;
 };
 
+export const updateReservationStatus = async (id, data) => {
+  const response = await api.patch(`/reservations/${id}/status`, data);
+  return response.data;
+};
+
 export const deleteReservation = async (id) => {
   const response = await api.delete(`/reservations/${id}`);
   return response.data;

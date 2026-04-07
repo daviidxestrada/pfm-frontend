@@ -6,19 +6,19 @@ function AdminDashboardPage() {
       title: "Apartamentos",
       description: "Gestionar el catalogo de apartamentos publicados.",
       to: "/admin/apartments",
-      status: "Siguiente bloque: CRUD admin apartments",
+      status: "CRUD operativo desde el panel",
     },
     {
       title: "Reservas",
       description: "Consultar y administrar las reservas registradas.",
       to: "/admin/reservations",
-      status: "Pendiente del bloque gestion de reservas admin",
+      status: "Solicitudes con aprobacion y denegacion",
     },
     {
       title: "Bloqueos",
       description: "Definir cierres manuales de disponibilidad por fechas.",
       to: "/admin/blocks",
-      status: "Pendiente del bloque bloqueo manual de fechas",
+      status: "Bloqueos manuales integrados en disponibilidad",
     },
   ];
 
@@ -33,7 +33,7 @@ function AdminDashboardPage() {
         </p>
       </div>
 
-      <div className="admin-kpis">
+      <div className="admin-kpis admin-kpis-compact">
         <article className="admin-kpi-card">
           <span>Autenticacion</span>
           <strong>Lista</strong>
@@ -44,12 +44,6 @@ function AdminDashboardPage() {
           <span>Disponibilidad</span>
           <strong>Lista</strong>
           <p>Las reservas ya validan solapes reales.</p>
-        </article>
-
-        <article className="admin-kpi-card">
-          <span>Backoffice</span>
-          <strong>En progreso</strong>
-          <p>La navegacion admin queda preparada para los siguientes bloques.</p>
         </article>
       </div>
 
