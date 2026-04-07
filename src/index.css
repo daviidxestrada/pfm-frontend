@@ -286,7 +286,8 @@ input {
 }
 
 .admin-field input,
-.admin-field textarea {
+.admin-field textarea,
+.admin-field select {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #d8d2c8;

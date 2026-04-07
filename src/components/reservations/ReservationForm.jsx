@@ -106,6 +106,8 @@ function ReservationForm({ apartmentId }) {
                     {unavailableRanges.map((range) => (
                         <li key={`${range.startDate}-${range.endDate}`}>
                             {formatRange(range.startDate)} - {formatRange(range.endDate)}
+                            {" "}
+                            {range.source === "block" ? "(bloqueo manual)" : "(reserva)"}
                         </li>
                     ))}
                 </ul>
