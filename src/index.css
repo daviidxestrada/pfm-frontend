@@ -353,7 +353,23 @@ input {
   gap: 16px;
 }
 
+.admin-reservation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .admin-apartment-item {
+  border: 1px solid #e4ddd2;
+  border-radius: 18px;
+  padding: 18px;
+  background: #fffdf9;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-reservation-item {
   border: 1px solid #e4ddd2;
   border-radius: 18px;
   padding: 18px;
@@ -369,9 +385,35 @@ input {
   gap: 8px;
 }
 
+.admin-reservation-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .admin-apartment-summary h3 {
   margin: 0;
   color: #1b1916;
+}
+
+.admin-reservation-summary h3 {
+  margin: 0;
+  color: #1b1916;
+}
+
+.admin-reservation-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.admin-reservation-price {
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #ece6da;
+  color: #1f1a11;
+  white-space: nowrap;
 }
 
 @media (max-width: 900px) {
@@ -399,5 +441,14 @@ input {
 
   .admin-apartment-item {
     flex-direction: column;
+  }
+
+  .admin-reservation-item {
+    flex-direction: column;
+  }
+
+  .admin-reservation-top {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
