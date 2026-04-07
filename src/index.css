@@ -674,6 +674,13 @@ h3 {
   border-color: #f3efe4;
 }
 
+.admin-link-active:hover {
+  transform: none;
+  background: #f3efe4;
+  color: var(--primary);
+  border-color: #f3efe4;
+}
+
 .admin-logout,
 .admin-module-link {
   border: 0;
@@ -704,15 +711,10 @@ h3 {
   max-width: 720px;
 }
 
-.admin-kpis,
 .admin-module-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
-}
-
-.admin-kpis-compact {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .admin-kpi-card,
@@ -944,7 +946,6 @@ h3 {
   .detail-layout,
   .info-grid,
   .apartment-grid,
-  .admin-kpis,
   .admin-module-grid,
   .admin-apartments-layout {
     grid-template-columns: 1fr;
@@ -984,10 +985,6 @@ h3 {
   }
 
   .admin-image-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .admin-kpis-compact {
     grid-template-columns: 1fr;
   }
 }

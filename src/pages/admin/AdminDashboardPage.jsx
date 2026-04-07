@@ -28,23 +28,9 @@ function AdminDashboardPage() {
         <p className="admin-eyebrow">Resumen</p>
         <h2>Panel de administracion</h2>
         <p>
-          Ya existe una zona privada navegable. A partir de aqui iremos
-          activando cada modulo por bloques.
+          Accede directamente a los tres modulos operativos del panel para
+          gestionar apartamentos, solicitudes y bloqueos.
         </p>
-      </div>
-
-      <div className="admin-kpis admin-kpis-compact">
-        <article className="admin-kpi-card">
-          <span>Autenticacion</span>
-          <strong>Lista</strong>
-          <p>Sesion persistente y rutas protegidas.</p>
-        </article>
-
-        <article className="admin-kpi-card">
-          <span>Disponibilidad</span>
-          <strong>Lista</strong>
-          <p>Las reservas ya validan solapes reales.</p>
-        </article>
       </div>
 
       <div className="admin-module-grid">
