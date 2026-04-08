@@ -38,7 +38,7 @@ function AdminLoginPage() {
           <h1>Login</h1>
           <p className="page-lead">
             Entra con tu cuenta para reservar apartamentos, consultar tus
-            reservas o acceder al panel admin si tu rol lo permite.
+            reservas o acceder al panel.
           </p>
         </div>
 
@@ -47,7 +47,7 @@ function AdminLoginPage() {
             <span>Email</span>
             <input
               type="email"
-              placeholder="admin@demo.com"
+              placeholder="user@email.com"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />
@@ -57,7 +57,7 @@ function AdminLoginPage() {
             <span>Password</span>
             <input
               type="password"
-              placeholder="Tu password"
+              placeholder="Tu contraseña"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
             />

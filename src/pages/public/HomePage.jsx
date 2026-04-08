@@ -25,11 +25,11 @@ function HomePage() {
         <div className="hero-panel">
           <div className="hero-stat">
             <span>Catalogo</span>
-            <strong>Apartamentos conectados al backend</strong>
+            <strong>Apartmentos con fotos, precios y caracteristicas</strong>
           </div>
           <div className="hero-stat">
             <span>Disponibilidad</span>
-            <strong>Reservas y bloqueos manuales integrados</strong>
+            <strong>Haz tu reserva y gestionala desde aquí.</strong>
           </div>
           <div className="hero-stat">
             <span>Gestion</span>
@@ -54,7 +54,7 @@ function HomePage() {
         <article className="info-card">
           <p className="page-eyebrow">3</p>
           <h2>Gestiona desde admin</h2>
-          <p>El panel privado ya permite operar apartamentos, reservas y bloqueos.</p>
+          <p>El panel privado permite operar apartamentos, reservas y bloqueos.</p>
         </article>
       </section>
     </section>
