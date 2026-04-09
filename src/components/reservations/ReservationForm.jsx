@@ -115,7 +115,7 @@ function ReservationForm({ apartmentId }) {
                   {formatRange(range.startDate)} - {formatRange(range.endDate)}
                 </span>
                 <span className="neutral-pill">
-                  {range.source === "block" ? "Bloqueo manual" : "Reserva"}
+                  {range.source === "block" ? "No disponible" : "Reserva"}
                 </span>
               </li>
             ))}
