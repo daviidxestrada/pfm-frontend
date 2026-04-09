@@ -1,26 +1,27 @@
 :root {
-  --bg: #f5f1e8;
-  --surface: rgba(255, 255, 255, 0.84);
-  --surface-strong: #fffdf8;
-  --border: #ddd4c7;
-  --text: #4d463e;
-  --text-strong: #191612;
-  --muted: #7a7369;
-  --primary: #244034;
-  --primary-contrast: #f5f1e8;
-  --secondary: #ece3d6;
-  --danger: #8f2323;
-  --danger-bg: #fbe4e4;
-  --success: #e3f4e8;
-  --shadow: 0 18px 40px rgba(18, 22, 18, 0.08);
+  --bg: #fcfcfc;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-strong: #ffffff;
+  --border: #d9b457;
+  --text: #111111;
+  --text-strong: #111111;
+  --muted: #760d0b;
+  --primary: #701c1b;
+  --primary-contrast: #ffffff;
+  --secondary: #fffecb;
+  --danger: #701c1b;
+  --danger-bg: #fde7e2;
+  --success: #eef7df;
+  --shadow: 0 18px 40px rgba(112, 28, 27, 0.12);
   --container: 1180px;
-  --sans: "Segoe UI", system-ui, sans-serif;
+  --heading-font: "Montserrat", Times, serif;
+  --text-font: Alexandria, Helvetica, sans-serif;
 
-  font: 16px/1.5 var(--sans);
+  font: 16px/1.5 var(--text-font);
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(214, 193, 163, 0.28), transparent 24%),
-    linear-gradient(180deg, #fbf8f1 0%, var(--bg) 100%);
+    radial-gradient(circle at top left, rgba(217, 180, 87, 0.22), transparent 24%),
+    linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -72,6 +73,7 @@ p {
 h1,
 h2,
 h3 {
+  font-family: var(--heading-font);
   color: var(--text-strong);
   line-height: 1.1;
 }
@@ -87,8 +89,8 @@ h3 {
   top: 0;
   z-index: 20;
   backdrop-filter: blur(14px);
-  background: rgba(245, 241, 232, 0.82);
-  border-bottom: 1px solid rgba(221, 212, 199, 0.72);
+  background: rgba(252, 252, 252, 0.88);
+  border-bottom: 1px solid rgba(217, 180, 87, 0.5);
 }
 
 .site-header-inner,
@@ -291,8 +293,8 @@ h3 {
 }
 
 .hero-stat {
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid rgba(221, 212, 199, 0.8);
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(217, 180, 87, 0.7);
 }
 
 .hero-stat,
@@ -363,7 +365,7 @@ h3 {
 
 .apartment-card-media {
   aspect-ratio: 16 / 9;
-  background: #e9e1d3;
+  background: #fff4f1;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -477,7 +479,7 @@ h3 {
   border-radius: 22px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  background: #e9e1d3;
+  background: #fff4f1;
 }
 
 .detail-gallery-empty {
@@ -529,7 +531,7 @@ h3 {
   align-items: center;
   padding: 12px 14px;
   border-radius: 12px;
-  background: rgba(236, 227, 214, 0.52);
+  background: rgba(255, 254, 203, 0.55);
 }
 
 .booking-form,
@@ -572,7 +574,7 @@ h3 {
 .page-feedback {
   padding: 12px 14px;
   border-radius: 14px;
-  background: rgba(236, 227, 214, 0.56);
+  background: rgba(255, 254, 203, 0.56);
 }
 
 .page-feedback-error,
@@ -628,7 +630,7 @@ h3 {
   min-height: 100svh;
   display: grid;
   grid-template-columns: 280px minmax(0, 1fr);
-  background: linear-gradient(180deg, #f8f4ea 0%, #fff 45%);
+  background: linear-gradient(180deg, #fff8f7 0%, #ffffff 45%);
   align-items: start;
 }
 
@@ -668,7 +670,7 @@ h3 {
 
 .admin-link {
   padding: 12px 14px;
-  border: 1px solid rgba(243, 239, 228, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
@@ -677,21 +679,21 @@ h3 {
 
 .admin-link:hover {
   transform: translateY(-2px);
-  border-color: rgba(243, 239, 228, 0.35);
-  background: rgba(243, 239, 228, 0.08);
+  border-color: rgba(255, 254, 203, 0.55);
+  background: rgba(255, 254, 203, 0.12);
 }
 
 .admin-link-active {
-  background: #f3efe4;
+  background: #fffecb;
   color: var(--primary);
-  border-color: #f3efe4;
+  border-color: #fffecb;
 }
 
 .admin-link-active:hover {
   transform: none;
-  background: #f3efe4;
+  background: #fffecb;
   color: var(--primary);
-  border-color: #f3efe4;
+  border-color: #fffecb;
 }
 
 .admin-logout,
@@ -704,8 +706,8 @@ h3 {
 
 .admin-logout {
   margin-top: auto;
-  background: #d9a441;
-  color: #1f1a11;
+  background: #d9b457;
+  color: #111111;
   cursor: pointer;
 }
 
