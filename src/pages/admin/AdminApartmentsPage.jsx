@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {
-  createApartment,
-  deleteApartment,
-  getApartments,
-  updateApartment,
-} from "../../services/apartmentService";
+import { createApartment, deleteApartment, getApartments, updateApartment } from "../../services";
 
 const initialForm = {
   title: "",

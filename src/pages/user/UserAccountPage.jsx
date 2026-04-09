@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AuthContext } from "../../context/authContext";
-import { getMyReservations } from "../../services/reservationService";
+import { AuthContext } from "../../context";
+import { getMyReservations } from "../../services";
 
 const formatDate = (value) =>
   new Date(value).toLocaleDateString("es-ES", {

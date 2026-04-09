@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { AuthContext } from "../../context/authContext";
-import {
-  createReservation,
-  getApartmentAvailability,
-} from "../../services/reservationService";
+import { AuthContext } from "../../context";
+import { createReservation, getApartmentAvailability } from "../../services";
 
 function ReservationForm({ apartmentId }) {
   const { user, authReady } = useContext(AuthContext);

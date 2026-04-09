@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getApartments } from "../../services/apartmentService";
-import { createBlock, deleteBlock, getBlocks } from "../../services/blockService";
+import { createBlock, deleteBlock, getApartments, getBlocks } from "../../services";
 
 const initialForm = {
   apartment: "",

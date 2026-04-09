@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import ApartmentCard from "../../components/apartments/ApartmentCard";
-import { getApartments } from "../../services/apartmentService";
+import { ApartmentCard } from "../../components";
+import { getApartments } from "../../services";
 
 function ApartmentsPage() {
   const [apartments, setApartments] = useState([]);

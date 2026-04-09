@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 
-import {
-  deleteReservation,
-  getReservations,
-  updateReservationStatus,
-} from "../../services/reservationService";
+import { deleteReservation, getReservations, updateReservationStatus } from "../../services";
 
 const formatDate = (value) =>
   new Date(value).toLocaleDateString("es-ES", {

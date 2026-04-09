@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import ReservationForm from "../../components/reservations/ReservationForm";
-import { getApartmentById } from "../../services/apartmentService";
+import { ReservationForm } from "../../components";
+import { getApartmentById } from "../../services";
 
 function ApartmentDetailPage() {
   const { id } = useParams();

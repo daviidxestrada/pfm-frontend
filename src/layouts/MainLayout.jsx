@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context";
 
 function MainLayout() {
   const { user, authReady } = useContext(AuthContext);

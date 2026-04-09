@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context";
 
 const adminLinks = [
   { to: "/admin", label: "Resumen", end: true },

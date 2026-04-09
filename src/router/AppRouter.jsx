@@ -1,23 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import AdminLayout from "../layouts/AdminLayout";
-import MainLayout from "../layouts/MainLayout";
-
-import HomePage from "../pages/public/HomePage";
-import ApartmentsPage from "../pages/public/ApartmentsPage";
-import ApartmentDetailPage from "../pages/public/ApartmentDetailPage";
-import NotFoundPage from "../pages/public/NotFoundPage";
-import RegisterPage from "../pages/public/RegisterPage";
-import ReservationPage from "../pages/public/ReservationPage";
-import UserAccountPage from "../pages/user/UserAccountPage";
-
-import ProtectedRoute from "./ProtectedRoute";
-
-import AdminApartmentsPage from "../pages/admin/AdminApartmentsPage";
-import AdminBlocksPage from "../pages/admin/AdminBlocksPage";
-import AdminLoginPage from "../pages/admin/AdminLoginPage";
-import AdminDashboardPage from "../pages/admin/AdminDashboardPage";
-import AdminReservationsPage from "../pages/admin/AdminReservationsPage";
+import { AdminLayout, MainLayout } from "../layouts";
+import {
+  AdminApartmentsPage,
+  AdminBlocksPage,
+  AdminDashboardPage,
+  AdminLoginPage,
+  AdminReservationsPage,
+  ApartmentDetailPage,
+  ApartmentsPage,
+  HomePage,
+  NotFoundPage,
+  RegisterPage,
+  ReservationPage,
+  UserAccountPage,
+} from "../pages";
+import { ProtectedRoute } from "./";
 
 function AppRouter() {
     return (
