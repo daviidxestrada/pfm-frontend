@@ -450,6 +450,7 @@ h3 {
 .apartment-card-text {
   color: var(--muted);
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
