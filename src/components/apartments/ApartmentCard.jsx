@@ -2,12 +2,18 @@ import { Link } from "react-router-dom";
 
 function ApartmentCard({ apartment }) {
   const coverImage = apartment.images?.[0];
+  const coverStyle = coverImage ? { backgroundImage: `url(${coverImage})` } : undefined;
 
   return (
     <article className="apartment-card">
-      <div className="apartment-card-media">
+      <div
+        className={`apartment-card-media${coverImage ? " apartment-card-media-cover" : ""}`}
+        style={coverStyle}
+        role={coverImage ? "img" : undefined}
+        aria-label={coverImage ? apartment.title : undefined}
+      >
         {coverImage ? (
-          <img src={coverImage} alt={apartment.title} className="apartment-cover-image" />
+          <span className="sr-only">{apartment.title}</span>
         ) : (
           <div className="apartment-cover-placeholder">
             <span>{apartment.city}</span>

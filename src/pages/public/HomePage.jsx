@@ -25,11 +25,11 @@ function HomePage() {
         <div className="hero-panel">
           <div className="hero-stat">
             <span>Catalogo</span>
-            <strong>Apartmentos con fotos, precios y caracteristicas</strong>
+            <strong>Apartamentos con fotos, precios y caracteristicas</strong>
           </div>
           <div className="hero-stat">
             <span>Disponibilidad</span>
-            <strong>Haz tu reserva y gestionala desde aquí.</strong>
+            <strong>Haz tu reserva y gestionala desde aqui.</strong>
           </div>
           <div className="hero-stat">
             <span>Gestion</span>
