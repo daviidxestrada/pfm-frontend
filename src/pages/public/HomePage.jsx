@@ -17,7 +17,7 @@ function HomePage() {
               Ver apartamentos
             </Link>
             <Link to="/login" className="site-cta site-cta-secondary">
-              Acceso admin
+              Ver mis reservas
             </Link>
           </div>
         </div>
