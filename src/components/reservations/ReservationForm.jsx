@@ -38,6 +38,7 @@ function ReservationForm({ apartmentId }) {
     const selectedStart = new Date(nextStartDate);
     const selectedEnd = new Date(nextEndDate);
 
+    // Comprueba si el rango elegido pisa una reserva o bloqueo existente.
     return unavailableRanges.some((range) => {
       const bookedStart = new Date(range.startDate);
       const bookedEnd = new Date(range.endDate);
@@ -84,6 +85,8 @@ function ReservationForm({ apartmentId }) {
       setMessage("Solicitud enviada. Queda pendiente de aprobacion por el admin.");
       setStartDate("");
       setEndDate("");
+
+      // Refresca la disponibilidad tras crear la solicitud para evitar solapes visibles.
       const data = await getApartmentAvailability(apartmentId);
       setUnavailableRanges(data.unavailableRanges);
     } catch (requestError) {

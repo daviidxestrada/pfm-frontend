@@ -18,7 +18,7 @@ function AdminLayout() {
       <aside className="admin-sidebar">
         <div className="admin-brand">
           <p className="admin-eyebrow">Panel privado</p>
-          <h1>PFM Apartments</h1>
+          <h1>Direct Booking</h1>
           <p>Sesion iniciada como {user?.email}</p>
         </div>
 

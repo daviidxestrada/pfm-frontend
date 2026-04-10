@@ -111,7 +111,6 @@ h3 {
 .site-brand {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
   align-self: center;
   line-height: 1;
 }
@@ -125,18 +124,6 @@ h3 {
 
 .site-brand-break {
   display: none;
-}
-
-.site-brand-mark {
-  display: inline-grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 16px;
-  background: var(--primary);
-  color: var(--primary-contrast);
-  font-weight: 700;
-  letter-spacing: 0.08em;
 }
 
 .site-nav {
@@ -991,7 +978,6 @@ h3 {
 
   .site-brand {
     min-width: 0;
-    gap: 12px;
     align-self: start;
   }
 

@@ -96,7 +96,7 @@ function RegisterPage() {
             <input
               type="password"
               name="password"
-              placeholder="Tu password"
+              placeholder="Tu contraseña"
               value={form.password}
               onChange={handleChange}
             />

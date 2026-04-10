@@ -8,6 +8,8 @@ function MainLayout() {
   const { user, authReady } = useContext(AuthContext);
   const isAdmin = user?.role === "admin";
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Cierra el panel movil al navegar por la app.
   const closeMenu = () => setMenuOpen(false);
 
   return (
@@ -15,7 +17,6 @@ function MainLayout() {
       <header className="site-header">
         <div className="site-header-inner">
           <Link to="/" className="site-brand" onClick={closeMenu}>
-            <span className="site-brand-mark">PFM</span>
             <strong>
               <span>Direct </span>
               <br className="site-brand-break" />
@@ -28,6 +29,7 @@ function MainLayout() {
             className="site-menu-toggle"
             aria-expanded={menuOpen}
             aria-controls="site-menu-panel"
+            // El mismo boton abre y cierra el menu responsive.
             onClick={() => setMenuOpen((currentValue) => !currentValue)}
           >
             <img src={menuIcon} alt="" aria-hidden="true" className="site-menu-toggle-icon" />
@@ -92,7 +94,7 @@ function MainLayout() {
 
       <footer className="site-footer">
         <div className="site-footer-inner">
-          <p>PFM Apartments · Reservas directas para apartamentos turisticos</p>
+          <p>Direct Booking · Reservas directas para apartamentos turisticos</p>
           <p>Proyecto Full Stack con React, Express y MongoDB</p>
         </div>
       </footer>
